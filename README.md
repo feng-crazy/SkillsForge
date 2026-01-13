@@ -16,7 +16,7 @@ SkillsForge 是一个轻量级、开源的 **Agent 能力扩展框架**，旨在
 
 ```bash
 # 克隆仓库
-git clone https://github.com/yourusername/skillsforge.git
+git clone https://github.com/feng-crazy/SkillsForge.git
 cd skillsforge
 
 # 安装依赖
@@ -92,35 +92,6 @@ agent = create_deep_agent(
 3. **添加技能元数据到系统提示**：将技能列表添加到系统提示中
 4. **将技能工具添加到 agent**：将 `get_skill` 工具添加到 agent 的工具列表中
 
-## 📝 skill.md 格式
-
-SkillsForge 支持标准的 Claude Skills 格式，示例如下：
-
-```markdown
----
-name: brand-guidelines
-description: 品牌指南技能，用于生成符合品牌规范的内容
-license: MIT
-allowed-tools: [read_file, write_file]
----
-
-# 品牌指南
-
-## 品牌色调
-- 主色：#007bff
-- 辅助色：#6c757d
-- 强调色：#ffc107
-
-## 品牌语音
-- 专业、友好、清晰
-- 避免使用行话和复杂术语
-- 保持一致的语调
-
-## 使用方法
-1. 了解品牌需求
-2. 遵循品牌色调和语音
-3. 生成符合规范的内容
-```
 
 ## 🔧 技能加载器 API
 
@@ -160,18 +131,5 @@ loader = SkillLoader(skills_dir="./skills")
 ## 📄 许可证
 
 本项目采用 MIT 许可证，详见 [LICENSE](LICENSE) 文件。
-
-## 📞 联系方式
-
-如有问题或建议，欢迎通过以下方式联系：
-
-- 提交 [Issue](https://github.com/yourusername/skillsforge/issues)
-- 发送邮件到：your.email@example.com
-
-## 🙏 致谢
-
-感谢所有为 SkillsForge 项目做出贡献的开发者！
-
----
 
 **SkillsForge** - 让 Agent 能力无限扩展 🚀
