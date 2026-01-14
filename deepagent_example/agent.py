@@ -7,10 +7,11 @@ from deepagents import create_deep_agent
 from search_tool import internet_search
 from bash_tool import run_bash_command
 
-# 导入技能工具
+# 导入技能工具和中间件
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from skill_tool import create_deepagent_skill_tools
+from skill_middleware import SkillsForgeMiddleware
 
 load_dotenv()
 
@@ -29,7 +30,12 @@ skill_tools, skill_loader = create_deepagent_skill_tools(
     skills_dir=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "skill-examples")
 )
 
-# 3. 系统提示词（引导 Agent 使用规划和文件）
+# 3. 初始化SkillsForge中间件
+skills_middleware = SkillsForgeMiddleware(
+    skills_dir=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "skill-examples")
+)
+
+# 4. 系统提示词（引导 Agent 使用规划和文件）
 SYSTEM_PROMPT = """
 你是一位专业研究助理。你的任务是根据用户需求完成深度研究并撰写报告。
 
@@ -46,17 +52,13 @@ SYSTEM_PROMPT = """
 - 报告需包含摘要、正文、参考文献
 """
 
-# 4. 添加技能元数据到系统提示
-if skill_loader:
-    skills_metadata = skill_loader.get_skills_metadata_prompt()
-    SYSTEM_PROMPT += "\n" + skills_metadata
-
 # 5. 创建 DeepAgent（自动启用所有内置 Middleware）
 agent = create_deep_agent(
     model=llm,
     tools=[internet_search, run_bash_command] + skill_tools,
     system_prompt=SYSTEM_PROMPT,
-    debug=True  # 开启调试日志
+    debug=True,  # 开启调试日志
+    middleware=[skills_middleware]  # 添加SkillsForge中间件
 )
 
 
